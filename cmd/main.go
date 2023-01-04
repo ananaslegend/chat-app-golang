@@ -6,9 +6,7 @@ import (
 )
 
 func main() {
-	var mongoConnection = "mongodb+srv://admin:adminpass@freemongocluster.ynduakg.mongodb.net/?retryWrites=true&w=majority"
-
-	a, err := app.New(mongoConnection)
+	a, err := app.New()
 	if err != nil {
 		log.Fatal(err)
 	}

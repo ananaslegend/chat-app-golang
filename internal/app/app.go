@@ -1,6 +1,7 @@
 package app
 
 import (
+	"chat-app-golang/internal/db/mongoreposytory"
 	"chat-app-golang/internal/endpoint"
 	"chat-app-golang/internal/service"
 	"github.com/labstack/echo/v4"
@@ -14,10 +15,10 @@ type App struct {
 	testSrv      *service.Test
 }
 
-func New(mongoConnection string) (*App, error) {
+func New() (*App, error) {
 	a := &App{}
 
-	a.testSrv = service.NewTest()
+	a.testSrv = service.NewTest(mongoreposytory.UserRepository{})
 	a.testEndpoint = endpoint.NewTest(a.testSrv)
 
 	a.echo = echo.New()

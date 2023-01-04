@@ -1,12 +1,18 @@
 package service
 
-import "fmt"
+import (
+	"chat-app-golang/internal/db/repository"
+	"fmt"
+)
 
 type Test struct {
+	userRepo repository.User
 }
 
-func NewTest() *Test {
-	return &Test{}
+func NewTest(userRepo repository.User) *Test {
+	return &Test{
+		userRepo: userRepo,
+	}
 }
 
 func (t Test) Hello() string {
