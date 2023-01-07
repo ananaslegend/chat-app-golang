@@ -1,4 +1,4 @@
-package endpoint
+package controller
 
 import (
 	"fmt"
@@ -17,11 +17,11 @@ func NewTest(srv Tester) *Test {
 }
 
 type Tester interface {
-	Hello() string
+	Test()
 }
 
 func (t Test) GetHello(c echo.Context) error {
-	result := t.service.Hello()
+	t.service.Test()
 
-	return c.JSON(http.StatusOK, fmt.Sprintf("message: %s", result))
+	return c.JSON(http.StatusOK, fmt.Sprintf("message: %s", "OK"))
 }

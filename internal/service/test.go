@@ -2,6 +2,9 @@ package service
 
 import (
 	"chat-app-golang/internal/db/repository"
+	"chat-app-golang/internal/domain"
+	"chat-app-golang/pkg/pointer"
+	"context"
 	"fmt"
 )
 
@@ -15,6 +18,10 @@ func NewTest(userRepo repository.User) *Test {
 	}
 }
 
-func (t Test) Hello() string {
-	return fmt.Sprint("Hello, from server!")
+func (t Test) Test() {
+	res, err := t.userRepo.Get(context.TODO(), domain.User{Username: pointer.ToString("Tester")})
+	if err != nil {
+		return
+	}
+	fmt.Println(res)
 }

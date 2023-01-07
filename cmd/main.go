@@ -11,7 +11,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err := a.Run(); err != nil {
+	if err = a.Run(); err != nil {
 		log.Fatal(err)
 	}
 }

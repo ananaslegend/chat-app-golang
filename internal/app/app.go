@@ -1,8 +1,8 @@
 package app
 
 import (
+	"chat-app-golang/internal/controller"
 	"chat-app-golang/internal/db/mongoreposytory"
-	"chat-app-golang/internal/endpoint"
 	"chat-app-golang/internal/service"
 	"github.com/labstack/echo/v4"
 	"log"
@@ -11,19 +11,31 @@ import (
 type App struct {
 	echo *echo.Echo
 
-	testEndpoint *endpoint.Test
-	testSrv      *service.Test
+	testController *controller.Test
+	authController *controller.Auth
+
+	testSrv *service.Test
 }
 
 func New() (*App, error) {
 	a := &App{}
 
-	a.testSrv = service.NewTest(mongoreposytory.UserRepository{})
-	a.testEndpoint = endpoint.NewTest(a.testSrv)
+	a.testController =
+		controller.NewTest(
+			service.NewTest(
+				mongoreposytory.User{}))
+
+	a.authController =
+		controller.NewAuth(
+			service.NewAuth(
+				mongoreposytory.User{}))
 
 	a.echo = echo.New()
 
-	a.echo.GET("/test", a.testEndpoint.GetHello)
+	a.echo.GET("api/test", a.testController.GetHello)
+
+	a.echo.POST("api/registration", a.authController.Registration)
+	//a.echo.POST("api/login", a.authController.Login)
 
 	return a, nil
 }
