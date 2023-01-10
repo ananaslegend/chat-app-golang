@@ -83,12 +83,9 @@ func (u User) GetUsersByCredentials(ctx context.Context, user domain.User) (*[]d
 	}
 
 	var result []domain.User
-	if err = mongoClient.Database("chat-app-golang").Collection("user").FindOne(c, filter).Decode(&result); err != nil {
-		if errors.Is(err, mongo.ErrNoDocuments) { // todo filter doesnt work or smth else work incorrect
-			return nil, db.NoResultErr
-		} else {
-			return nil, err
-		}
+	res, _ := mongoClient.Database("chat-app-golang").Collection("user").Find(c, filter)
+	if err = res.Decode(&result); err != nil {
+		return nil, err
 	}
 
 	return &result, nil
